@@ -1,6 +1,8 @@
 package com.example.attornatus.attornatus.controller;
 
+import com.example.attornatus.attornatus.dto.AddressDTO;
 import com.example.attornatus.attornatus.dto.PersonDTO;
+import com.example.attornatus.attornatus.services.AddressService;
 import com.example.attornatus.attornatus.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,9 @@ public class PersonController {
 
     @Autowired
     private PersonService service;
+
+    @Autowired
+    private AddressService addressService;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.OK)
@@ -46,6 +51,10 @@ public class PersonController {
         service.delete(id);
     }
 
-
+    @GetMapping(value = "addresses/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.OK)
+    public List<AddressDTO> findAllAddresses(@PathVariable(value = "id") Long id) throws Exception {
+        return addressService.findAllByPersonId(id);
+    }
 
 }
