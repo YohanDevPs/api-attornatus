@@ -43,22 +43,4 @@ public class PersonDTO implements Serializable {
     public void setBirthDay(LocalDate birthDay) {
         this.birthDay = birthDay;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PersonDTO personDTO)) return false;
-
-        if (getId() != null ? !getId().equals(personDTO.getId()) : personDTO.getId() != null) return false;
-        if (getName() != null ? !getName().equals(personDTO.getName()) : personDTO.getName() != null) return false;
-        return getBirthDay() != null ? getBirthDay().equals(personDTO.getBirthDay()) : personDTO.getBirthDay() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getBirthDay() != null ? getBirthDay().hashCode() : 0);
-        return result;
-    }
 }

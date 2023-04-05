@@ -3,7 +3,9 @@ package com.example.attornatus.attornatus.services;
 import com.example.attornatus.attornatus.dto.PersonDTO;
 import com.example.attornatus.attornatus.exeptions.ResourceNotFoundException;
 import com.example.attornatus.attornatus.mapper.UtilModelMapper;
+import com.example.attornatus.attornatus.models.Address;
 import com.example.attornatus.attornatus.models.Person;
+import com.example.attornatus.attornatus.repositorys.AddressRepository;
 import com.example.attornatus.attornatus.repositorys.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ public class PersonServiceImpl implements PersonService{
 
     @Autowired
     private PersonRepository repository;
+    @Autowired
+    private AddressRepository addressRepository;
 
     private Logger logger = Logger.getLogger(PersonService.class.getName());
 
@@ -61,5 +65,14 @@ public class PersonServiceImpl implements PersonService{
         var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
         repository.delete(entity);
+    }
+
+    @Override
+    public List<Address> getAddressesByPersonId(Long id) {
+        var entityPerson = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
+
+        var setAddressesDto = addressRepository.findByPersonId(entityPerson.getId());
+        return setAddressesDto;
     }
 }

@@ -28,6 +28,10 @@ public class Address {
     @Column(nullable = false, length = 80)
     private String city;
 
+    @NotBlank
+    @Column
+    private boolean mainAddress;
+
     @ManyToOne
     @JoinColumn(name = "person_id")
     private Person person;
@@ -86,6 +90,14 @@ public class Address {
         return person;
     }
 
+    public boolean isMainAddress() {
+        return mainAddress;
+    }
+
+    public void setMainAddress(boolean mainAddress) {
+        this.mainAddress = mainAddress;
+    }
+
     public void setPerson(Person person) {
         this.person = person;
     }
@@ -96,6 +108,7 @@ public class Address {
         if (!(o instanceof Address address)) return false;
 
         if (getNumber() != address.getNumber()) return false;
+        if (isMainAddress() != address.isMainAddress()) return false;
         if (getId() != null ? !getId().equals(address.getId()) : address.getId() != null) return false;
         if (getCEP() != null ? !getCEP().equals(address.getCEP()) : address.getCEP() != null) return false;
         if (getStreet() != null ? !getStreet().equals(address.getStreet()) : address.getStreet() != null) return false;
@@ -110,6 +123,7 @@ public class Address {
         result = 31 * result + (getStreet() != null ? getStreet().hashCode() : 0);
         result = 31 * result + getNumber();
         result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);
+        result = 31 * result + (isMainAddress() ? 1 : 0);
         result = 31 * result + (getPerson() != null ? getPerson().hashCode() : 0);
         return result;
     }

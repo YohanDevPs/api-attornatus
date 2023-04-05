@@ -21,7 +21,6 @@ public class Person {
     @OneToMany(cascade=CascadeType.MERGE, mappedBy="person", orphanRemoval=true)
     private Set<Address> addresses = new HashSet<>();
 
-
     public Person() {
     }
 

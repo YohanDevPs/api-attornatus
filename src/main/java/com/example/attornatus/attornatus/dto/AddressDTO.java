@@ -3,11 +3,11 @@ package com.example.attornatus.attornatus.dto;
 public class AddressDTO {
 
     private Long id;
-//    @Cep
     private String CEP;
     private String street;
     private Integer number;
     private String city;
+    private boolean mainAddress;
 
     public AddressDTO() {
     }
@@ -50,5 +50,13 @@ public class AddressDTO {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public boolean isMainAddress() {
+        return mainAddress;
+    }
+
+    public void setMainAddress(boolean mainAddress) {
+        this.mainAddress = mainAddress;
     }
 }
