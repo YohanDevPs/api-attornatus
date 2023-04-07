@@ -8,11 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AttornatusApplication {
 
 	public static void main(String[] args) {
-		AddressDTO addressDTO = new AddressDTO();
-		addressDTO.setCEP("3234ddd");
-		addressDTO.getCEP();
-
 		SpringApplication.run(AttornatusApplication.class, args);
 	}
-
 }

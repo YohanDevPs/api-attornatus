@@ -1,5 +1,6 @@
 package com.example.attornatus.attornatus.services;
 
+import com.example.attornatus.attornatus.dto.AddressDTO;
 import com.example.attornatus.attornatus.dto.PersonDTO;
 import com.example.attornatus.attornatus.models.Address;
 
@@ -12,5 +13,7 @@ public interface PersonService {
     PersonDTO create(PersonDTO dto);
     PersonDTO update(PersonDTO dto);
     void delete(Long id);
-    List<Address> getAddressesByPersonId(Long id);
+    List<Address> getAddressesEntitiesByPersonId(Long id);
+    AddressDTO findMainAddressByPersonId(Long id);
+    List<AddressDTO> findAddressesByPersonId(Long id);
 }

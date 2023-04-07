@@ -1,6 +1,8 @@
 package com.example.attornatus.attornatus.services;
 
+import com.example.attornatus.attornatus.dto.AddressDTO;
 import com.example.attornatus.attornatus.dto.PersonDTO;
+import com.example.attornatus.attornatus.exeptions.RequiredObjectIsNullException;
 import com.example.attornatus.attornatus.exeptions.ResourceNotFoundException;
 import com.example.attornatus.attornatus.mapper.UtilModelMapper;
 import com.example.attornatus.attornatus.models.Address;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.logging.Logger;
+
+import static com.example.attornatus.attornatus.mapper.UtilModelMapper.parseObject;
 
 @Service
 public class PersonServiceImpl implements PersonService{
@@ -36,18 +40,25 @@ public class PersonServiceImpl implements PersonService{
 
         var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
-        return UtilModelMapper.parseObject(entity, PersonDTO.class);
+        return parseObject(entity, PersonDTO.class);
     }
 
     @Override
     public PersonDTO create(PersonDTO dto) {
+        if(dto == null) {
+            throw new RequiredObjectIsNullException();
+        }
         logger.info("Creating one PersonDTO");
-        var entity = UtilModelMapper.parseObject(dto, Person.class);
-        return UtilModelMapper.parseObject(repository.save(entity), PersonDTO.class);
+        var entity = parseObject(dto, Person.class);
+        return parseObject(repository.save(entity), PersonDTO.class);
     }
 
     @Override
     public PersonDTO update(PersonDTO dto) {
+        if(dto == null) {
+            throw new RequiredObjectIsNullException();
+        }
+
         logger.info("Update one PersonDTO");
 
         var entity = repository.findById(dto.getId())
@@ -56,23 +67,44 @@ public class PersonServiceImpl implements PersonService{
         entity.setName(dto.getName());
         entity.setBirthDay(dto.getBirthDay());
 
-        return UtilModelMapper.parseObject(repository.save(entity), PersonDTO.class);
+        return parseObject(repository.save(entity), PersonDTO.class);
     }
 
 
     @Override
     public void delete(Long id) {
+        logger.info("Delete one Person");
+
         var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
         repository.delete(entity);
     }
 
     @Override
-    public List<Address> getAddressesByPersonId(Long id) {
+    public List<Address> getAddressesEntitiesByPersonId(Long id) {
+        logger.info("get all addresses of Person");
+
         var entityPerson = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
-        var setAddressesDto = addressRepository.findByPersonId(entityPerson.getId());
-        return setAddressesDto;
+        return addressRepository.findByPersonId(entityPerson.getId());
+    }
+
+    @Override
+    public List<AddressDTO> findAddressesByPersonId(Long id) {
+        logger.info("find all Addresses by person id: " + id);
+
+        return UtilModelMapper.parseListObjects(getAddressesEntitiesByPersonId(id), AddressDTO.class);
+    }
+
+    @Override
+    public AddressDTO findMainAddressByPersonId(Long id) {
+        var entityMainAddress = getAddressesEntitiesByPersonId(id)
+                .stream()
+                .filter(p -> p.isMainAddress() == true)
+                .findFirst()
+                .orElse(null);
+
+        return parseObject(entityMainAddress, AddressDTO.class);
     }
 }

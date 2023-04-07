@@ -109,7 +109,6 @@ public class Address {
 
         if (getNumber() != address.getNumber()) return false;
         if (isMainAddress() != address.isMainAddress()) return false;
-        if (getId() != null ? !getId().equals(address.getId()) : address.getId() != null) return false;
         if (getCEP() != null ? !getCEP().equals(address.getCEP()) : address.getCEP() != null) return false;
         if (getStreet() != null ? !getStreet().equals(address.getStreet()) : address.getStreet() != null) return false;
         if (getCity() != null ? !getCity().equals(address.getCity()) : address.getCity() != null) return false;
@@ -118,8 +117,7 @@ public class Address {
 
     @Override
     public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getCEP() != null ? getCEP().hashCode() : 0);
+        int result = getCEP() != null ? getCEP().hashCode() : 0;
         result = 31 * result + (getStreet() != null ? getStreet().hashCode() : 0);
         result = 31 * result + getNumber();
         result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);

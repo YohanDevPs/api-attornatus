@@ -3,7 +3,6 @@ package com.example.attornatus.attornatus.services.autoupdate;
 import com.example.attornatus.attornatus.dto.AddressDTO;
 import com.example.attornatus.attornatus.models.Address;
 import com.example.attornatus.attornatus.repositorys.AddressRepository;
-import com.example.attornatus.attornatus.services.AddressService;
 import com.example.attornatus.attornatus.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ public class AutoUpdateServiceImpl implements AutoUpdateService {
     @Override
     public void setOldMainAddressToFalse(Long idPerson, AddressDTO dto) {
         if(dto.isMainAddress() == true) {
-            var oldMainAddress = personService.getAddressesByPersonId(idPerson)
+            var oldMainAddress = personService.getAddressesEntitiesByPersonId(idPerson)
                     .stream()
                     .filter(Address::isMainAddress)
                     .findFirst()

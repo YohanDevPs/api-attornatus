@@ -1,5 +1,7 @@
 package com.example.attornatus.attornatus.dto;
 
+import com.example.attornatus.attornatus.models.Address;
+
 public class AddressDTO {
 
     private Long id;
@@ -58,5 +60,27 @@ public class AddressDTO {
 
     public void setMainAddress(boolean mainAddress) {
         this.mainAddress = mainAddress;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AddressDTO that)) return false;
+
+        if (isMainAddress() != that.isMainAddress()) return false;
+        if (getCEP() != null ? !getCEP().equals(that.getCEP()) : that.getCEP() != null) return false;
+        if (getStreet() != null ? !getStreet().equals(that.getStreet()) : that.getStreet() != null) return false;
+        if (getNumber() != null ? !getNumber().equals(that.getNumber()) : that.getNumber() != null) return false;
+        return getCity() != null ? getCity().equals(that.getCity()) : that.getCity() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getCEP() != null ? getCEP().hashCode() : 0;
+        result = 31 * result + (getStreet() != null ? getStreet().hashCode() : 0);
+        result = 31 * result + (getNumber() != null ? getNumber().hashCode() : 0);
+        result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);
+        result = 31 * result + (isMainAddress() ? 1 : 0);
+        return result;
     }
 }
