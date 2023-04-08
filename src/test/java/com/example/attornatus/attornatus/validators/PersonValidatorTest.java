@@ -1,6 +1,5 @@
 package com.example.attornatus.attornatus.validators;
 
-import com.example.attornatus.attornatus.dto.AddressDTO;
 import com.example.attornatus.attornatus.mapper.UtilModelMapper;
 import com.example.attornatus.attornatus.mocks.MockAddress;
 import com.example.attornatus.attornatus.mocks.MockPerson;
@@ -13,9 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.example.attornatus.attornatus.mapper.UtilModelMapper.parseObject;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)

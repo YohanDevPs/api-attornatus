@@ -2,7 +2,6 @@ package com.example.attornatus.attornatus.services.autoupdate;
 
 import com.example.attornatus.attornatus.dto.AddressDTO;
 import com.example.attornatus.attornatus.mocks.MockAddress;
-import com.example.attornatus.attornatus.mocks.MockPerson;
 import com.example.attornatus.attornatus.models.Address;
 import com.example.attornatus.attornatus.repositorys.AddressRepository;
 import com.example.attornatus.attornatus.services.PersonService;
@@ -17,8 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import static org.mockito.Mockito.*;
 

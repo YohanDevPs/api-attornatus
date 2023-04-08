@@ -1,9 +1,5 @@
 package com.example.attornatus.attornatus.dto;
 
-import com.example.attornatus.attornatus.models.Address;
-
-import java.util.Objects;
-
 public class AddressDTO {
 
     private Long id;
@@ -63,31 +59,6 @@ public class AddressDTO {
     public void setMainAddress(boolean mainAddress) {
         this.mainAddress = mainAddress;
     }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (!(o instanceof Address)) return false;
-//        Address address = (Address) o;
-//        if (o instanceof AddressDTO) {
-//            AddressDTO addressDTO = (AddressDTO) o;
-//            return number == addressDTO.getNumber() &&
-//                    Objects.equals(cep, addressDTO.getCep()) &&
-//                    Objects.equals(street, addressDTO.getStreet()) &&
-//                    Objects.equals(city, addressDTO.getCity());
-//        } else {
-//            return number == address.getNumber() &&
-//                    Objects.equals(cep, address.getCep()) &&
-//                    Objects.equals(street, address.getStreet()) &&
-//                    Objects.equals(city, address.getCity());
-//        }
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(cep, street, number, city);
-//    }
-
 
     @Override
     public boolean equals(Object o) {

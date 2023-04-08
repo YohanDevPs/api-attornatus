@@ -3,7 +3,6 @@ package com.example.attornatus.attornatus.validators;
 import com.example.attornatus.attornatus.dto.AddressDTO;
 import com.example.attornatus.attornatus.mapper.UtilModelMapper;
 import com.example.attornatus.attornatus.mocks.MockAddress;
-import com.example.attornatus.attornatus.models.Address;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

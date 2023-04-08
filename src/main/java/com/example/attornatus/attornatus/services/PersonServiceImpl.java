@@ -2,7 +2,6 @@ package com.example.attornatus.attornatus.services;
 
 import com.example.attornatus.attornatus.dto.AddressDTO;
 import com.example.attornatus.attornatus.dto.PersonDTO;
-import com.example.attornatus.attornatus.exeptions.RequiredObjectIsNullException;
 import com.example.attornatus.attornatus.exeptions.ResourceNotFoundException;
 import com.example.attornatus.attornatus.mapper.UtilModelMapper;
 import com.example.attornatus.attornatus.models.Address;

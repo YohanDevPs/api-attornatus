@@ -1,13 +1,11 @@
 package com.example.attornatus.attornatus.controllers;
 
 import com.example.attornatus.attornatus.controller.AddressController;
-import com.example.attornatus.attornatus.controller.PersonController;
 import com.example.attornatus.attornatus.dto.AddressDTO;
-import com.example.attornatus.attornatus.dto.PersonDTO;
 import com.example.attornatus.attornatus.mocks.MockAddress;
 import com.example.attornatus.attornatus.mocks.MockPerson;
 import com.example.attornatus.attornatus.services.AddressService;
-import com.example.attornatus.attornatus.services.PersonService;
+import com.example.attornatus.attornatus.services.AddressServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,9 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
 @AutoConfigureMockMvc

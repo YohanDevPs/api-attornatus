@@ -3,8 +3,6 @@ package com.example.attornatus.attornatus.models;
 import com.example.attornatus.attornatus.dto.AddressDTO;
 import jakarta.persistence.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -15,22 +13,17 @@ public class Address {
     private Long id;
 
     @Column
-    @NotBlank
     private String cep;
 
-    @Column
-    @NotBlank
+    @Column(nullable = false)
     private String street;
 
-    @Column
-    @NotNull
+    @Column(nullable = false)
     private int number;
 
-    @NotBlank
-    @Column(nullable = false, length = 80)
+    @Column(nullable = false)
     private String city;
 
-    @NotBlank
     @Column
     private boolean mainAddress;
 

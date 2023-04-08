@@ -1,6 +1,5 @@
 package com.example.attornatus.attornatus;
 
-import com.example.attornatus.attornatus.dto.AddressDTO;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
