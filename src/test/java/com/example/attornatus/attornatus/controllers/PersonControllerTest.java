@@ -28,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PersonControllerTest {
 
     public static final long ID = 1L;
+    public static final String URL = "/api/person/v1";
     @Autowired
     MockMvc mockMvc;
     MockPerson inputPerson;
@@ -38,7 +39,6 @@ public class PersonControllerTest {
     @MockBean
     private PersonService personService;
 
-    private String url = "/api/person/v1";
 
     @BeforeEach
     public void setup() {
@@ -59,7 +59,7 @@ public class PersonControllerTest {
 
         var jsonPerson = objectMapper.writeValueAsString(personDTOList);
 
-        this.mockMvc.perform(get(url)
+        this.mockMvc.perform(get(URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonPerson)
                         .accept(MediaType.APPLICATION_JSON))
@@ -77,7 +77,7 @@ public class PersonControllerTest {
 
         var jsonPerson = objectMapper.writeValueAsString(personDTO);
 
-        this.mockMvc.perform(get(url+"/1")
+        this.mockMvc.perform(get(URL+"/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonPerson)
                         .accept(MediaType.APPLICATION_JSON))
@@ -97,7 +97,7 @@ public class PersonControllerTest {
 
         var jsonPerson = objectMapper.writeValueAsString(personDTO);
 
-        this.mockMvc.perform(post(url)
+        this.mockMvc.perform(post(URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonPerson)
                         .accept(MediaType.APPLICATION_JSON))
@@ -116,7 +116,7 @@ public class PersonControllerTest {
 
         var jsonPerson = objectMapper.writeValueAsString(personDTO);
 
-        mockMvc.perform(put(url)
+        mockMvc.perform(put(URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonPerson))
                 .andExpect(status().isOk())
@@ -132,7 +132,7 @@ public class PersonControllerTest {
     public void testEndpointDeletionByIdPerson() throws Exception {
         doNothing().when(personService).delete(ID);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete(url+"/1")
+        mockMvc.perform(MockMvcRequestBuilders.delete(URL+"/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
@@ -147,7 +147,7 @@ public class PersonControllerTest {
 
         var jsonPerson = objectMapper.writeValueAsString(addressDTOList);
 
-        this.mockMvc.perform(get(url+"/addresses/1")
+        this.mockMvc.perform(get(URL+"/addresses/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonPerson)
                         .accept(MediaType.APPLICATION_JSON))
@@ -171,7 +171,7 @@ public class PersonControllerTest {
 
         var jsonAddressMainDTO = objectMapper.writeValueAsString(mainAddressDTO);
 
-        this.mockMvc.perform(get(url+"/mainAdress/1")
+        this.mockMvc.perform(get(URL+"/mainAdress/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonAddressMainDTO)
                         .accept(MediaType.APPLICATION_JSON))

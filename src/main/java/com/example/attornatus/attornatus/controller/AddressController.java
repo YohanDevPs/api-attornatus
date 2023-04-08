@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,7 @@ public class AddressController {
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             })
+    @ResponseStatus(HttpStatus.OK)
     public AddressDTO findById(@PathVariable(value = "id") Long id) throws Exception {
         return service.findById(id);
     }
@@ -47,6 +49,7 @@ public class AddressController {
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             })
+    @ResponseStatus(HttpStatus.CREATED)
     public AddressDTO create(@PathVariable(value = "idPerson") Long idPerson, @RequestBody AddressDTO dto) throws Exception {
         return service.create(idPerson, dto);
     }
@@ -62,6 +65,7 @@ public class AddressController {
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             })
+    @ResponseStatus(HttpStatus.OK)
     public AddressDTO update(@RequestBody AddressDTO dto) throws Exception {
         return service.update(dto);
     }
@@ -76,6 +80,7 @@ public class AddressController {
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "id") Long id) throws Exception {
         service.delete(id);
     }

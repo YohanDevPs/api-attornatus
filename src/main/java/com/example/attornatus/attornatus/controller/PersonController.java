@@ -38,6 +38,7 @@ public class PersonController {
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
     })
+    @ResponseStatus(HttpStatus.OK)
     public List<PersonDTO> findAll() throws Exception {
         return service.findAll();
     }
@@ -54,6 +55,7 @@ public class PersonController {
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             })
+    @ResponseStatus(HttpStatus.OK)
     public PersonDTO findById(@PathVariable(value = "id") Long id) throws Exception {
         return service.findById(id);
     }
@@ -68,6 +70,7 @@ public class PersonController {
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             })
+    @ResponseStatus(HttpStatus.CREATED)
     public PersonDTO create(@RequestBody PersonDTO dto) throws Exception {
         return service.create(dto);
     }
@@ -83,6 +86,7 @@ public class PersonController {
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             })
+    @ResponseStatus(HttpStatus.OK)
     public PersonDTO update(@RequestBody PersonDTO dto) throws Exception {
         return service.update(dto);
     }
@@ -97,12 +101,12 @@ public class PersonController {
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             })
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "id") Long id) throws Exception {
         service.delete(id);
     }
 
     @GetMapping(value = "addresses/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Finds all addresses by person id", description = "Finds all addresses of a person passing a id",
             tags = {"Person"},
             responses = {
@@ -117,6 +121,7 @@ public class PersonController {
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             })
+    @ResponseStatus(HttpStatus.OK)
     public List<AddressDTO> findAddressesByPersonId(@PathVariable(value = "id") Long id) throws Exception {
         return service.findAddressesByPersonId(id);
     }
@@ -133,6 +138,7 @@ public class PersonController {
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
             })
+    @ResponseStatus(HttpStatus.OK)
     public AddressDTO findMainAddress(@PathVariable(value = "id") Long id) throws Exception {
         return service.findMainAddressByPersonId(id);
     }

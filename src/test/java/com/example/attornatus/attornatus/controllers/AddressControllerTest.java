@@ -5,7 +5,6 @@ import com.example.attornatus.attornatus.dto.AddressDTO;
 import com.example.attornatus.attornatus.mocks.MockAddress;
 import com.example.attornatus.attornatus.mocks.MockPerson;
 import com.example.attornatus.attornatus.services.AddressService;
-import com.example.attornatus.attornatus.services.AddressServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AddressControllerTest {
 
     public static final long ID = 1L;
+    private static final String URL = "/api/address/v1";
     @Autowired
     MockMvc mockMvc;
     MockPerson inputPerson;
@@ -41,7 +41,6 @@ public class AddressControllerTest {
     @MockBean
     private AddressService addressService;
 
-    private String url = "/api/address/v1";
 
     @BeforeEach
     public void setupEndpoint() {
@@ -62,7 +61,7 @@ public class AddressControllerTest {
 
         var jsonAddress = objectMapper.writeValueAsString(addressDTO);
 
-        this.mockMvc.perform(post(url + "/create/" + ID)
+        this.mockMvc.perform(post(URL + "/create/" + ID)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonAddress)
                         .accept(MediaType.APPLICATION_JSON))
@@ -84,7 +83,7 @@ public class AddressControllerTest {
 
         var jsonAddress = objectMapper.writeValueAsString(addressDTO);
 
-        this.mockMvc.perform(get(url+"/1")
+        this.mockMvc.perform(get(URL+"/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonAddress)
                         .accept(MediaType.APPLICATION_JSON))
@@ -105,7 +104,7 @@ public class AddressControllerTest {
 
         var jsonAddress = objectMapper.writeValueAsString(addressDTO);
         // when
-        mockMvc.perform(put(url)
+        mockMvc.perform(put(URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonAddress))
                 .andExpect(status().isOk())
@@ -123,7 +122,7 @@ public class AddressControllerTest {
     public void testEndpointDeletionByAddressId() throws Exception {
         doNothing().when(addressService).delete(ID);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete(url+String.format("/%d", ID))
+        mockMvc.perform(MockMvcRequestBuilders.delete(URL+String.format("/%d", ID))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
