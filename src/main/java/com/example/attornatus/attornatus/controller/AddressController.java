@@ -2,6 +2,7 @@ package com.example.attornatus.attornatus.controller;
 
 import com.example.attornatus.attornatus.dto.AddressDTO;
 import com.example.attornatus.attornatus.services.AddressService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/address/v1")
+@Tag(name = "Address", description = "Endpoints for managing addresses")
 public class AddressController {
 
     @Autowired
