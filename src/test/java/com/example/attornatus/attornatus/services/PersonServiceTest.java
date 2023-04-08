@@ -10,6 +10,7 @@ import com.example.attornatus.attornatus.models.Address;
 import com.example.attornatus.attornatus.models.Person;
 import com.example.attornatus.attornatus.repositorys.AddressRepository;
 import com.example.attornatus.attornatus.repositorys.PersonRepository;
+import com.example.attornatus.attornatus.validators.PersonValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -26,7 +27,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -43,6 +43,8 @@ public class PersonServiceTest {
     private PersonRepository repository;
     @Mock
     private AddressRepository addressRepository;
+    @Mock
+    private PersonValidator validator;
 
     @BeforeEach
     void setUpMocks() {
@@ -99,6 +101,7 @@ public class PersonServiceTest {
         dto.setId(ID);
 
         when(repository.save(person)).thenReturn(persisted);
+        doNothing().when(validator).create(dto);
         var result = service.create(dto);
         assertEquals(result.getClass() , PersonDTO.class);
         assertNotNull(result);
@@ -107,17 +110,6 @@ public class PersonServiceTest {
         assertEquals(LocalDate.parse("31-12-1998", DateTimeFormatter.ofPattern("dd-MM-yyyy")), result.getBirthDay());
     }
 
-    @Test
-    void testCreateIfNullPerson() throws Exception {
-        Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
-            service.create(null);
-        });
-
-        String expectedMessage = "It is not allowed to persist a null object";
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage));
-    }
 
     @Test
     void testUpdate() throws Exception {
@@ -130,6 +122,7 @@ public class PersonServiceTest {
         PersonDTO dto = inputPerson.mockDTO(1);
         dto.setId(ID);
 
+        doNothing().when(validator).update(dto);
         when(repository.findById(ID)).thenReturn(Optional.of(entity));
         when(repository.save(entity)).thenReturn(persisted);
 
@@ -140,18 +133,6 @@ public class PersonServiceTest {
         assertNotNull(result.getId());
         assertEquals("Name1", result.getName());
         assertEquals(LocalDate.parse("31-12-1998", DateTimeFormatter.ofPattern("dd-MM-yyyy")), result.getBirthDay());
-    }
-
-    @Test
-    void testUpdateIfNullPerson() throws Exception {
-        Exception exception = assertThrows(RequiredObjectIsNullException.class, () -> {
-            service.update(null);
-        });
-
-        String expectedMessage = "It is not allowed to persist a null object";
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test

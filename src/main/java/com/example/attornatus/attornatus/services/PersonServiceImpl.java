@@ -9,6 +9,7 @@ import com.example.attornatus.attornatus.models.Address;
 import com.example.attornatus.attornatus.models.Person;
 import com.example.attornatus.attornatus.repositorys.AddressRepository;
 import com.example.attornatus.attornatus.repositorys.PersonRepository;
+import com.example.attornatus.attornatus.validators.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,9 @@ public class PersonServiceImpl implements PersonService{
     private PersonRepository repository;
     @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    private PersonValidator validator;
 
     private Logger logger = Logger.getLogger(PersonService.class.getName());
 
@@ -45,20 +49,16 @@ public class PersonServiceImpl implements PersonService{
 
     @Override
     public PersonDTO create(PersonDTO dto) {
-        if(dto == null) {
-            throw new RequiredObjectIsNullException();
-        }
+        validator.create(dto);
         logger.info("Creating one PersonDTO");
         var entity = parseObject(dto, Person.class);
         return parseObject(repository.save(entity), PersonDTO.class);
+
     }
 
     @Override
     public PersonDTO update(PersonDTO dto) {
-        if(dto == null) {
-            throw new RequiredObjectIsNullException();
-        }
-
+        validator.update(dto);
         logger.info("Update one PersonDTO");
 
         var entity = repository.findById(dto.getId())
