@@ -13,7 +13,7 @@ public interface PersonService {
     PersonDTO create(PersonDTO dto);
     PersonDTO update(PersonDTO dto);
     void delete(Long id);
-    List<Address> getAddressesEntitiesByPersonId(Long id);
+    List<Address> findAddressesEntitiesByPersonId(Long id);
     AddressDTO findMainAddressByPersonId(Long id);
     List<AddressDTO> findAddressesByPersonId(Long id);
 }

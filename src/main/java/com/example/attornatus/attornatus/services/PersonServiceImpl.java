@@ -81,7 +81,7 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
-    public List<Address> getAddressesEntitiesByPersonId(Long id) {
+    public List<Address> findAddressesEntitiesByPersonId(Long id) {
         logger.info("get all addresses of Person");
 
         var entityPerson = repository.findById(id)
@@ -94,12 +94,12 @@ public class PersonServiceImpl implements PersonService{
     public List<AddressDTO> findAddressesByPersonId(Long id) {
         logger.info("find all Addresses by person id: " + id);
 
-        return UtilModelMapper.parseListObjects(getAddressesEntitiesByPersonId(id), AddressDTO.class);
+        return UtilModelMapper.parseListObjects(findAddressesEntitiesByPersonId(id), AddressDTO.class);
     }
 
     @Override
     public AddressDTO findMainAddressByPersonId(Long id) {
-        var entityMainAddress = getAddressesEntitiesByPersonId(id)
+        var entityMainAddress = findAddressesEntitiesByPersonId(id)
                 .stream()
                 .filter(p -> p.isMainAddress() == true)
                 .findFirst()

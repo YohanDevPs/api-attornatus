@@ -15,11 +15,6 @@ public class PersonDTO implements Serializable {
     public PersonDTO() {
     }
 
-    public PersonDTO(String name, LocalDate birthDay) {
-        this.name = name;
-        this.birthDay = birthDay;
-    }
-
     public Long getId() {
         return id;
     }

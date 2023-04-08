@@ -1,4 +1,4 @@
-package com.example.attornatus.attornatus;
+package com.example.attornatus.attornatus.mapper;
 
 import com.example.attornatus.attornatus.dto.PersonDTO;
 import com.example.attornatus.attornatus.mapper.UtilModelMapper;

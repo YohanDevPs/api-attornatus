@@ -3,6 +3,7 @@ package com.example.attornatus.attornatus.services;
 import com.example.attornatus.attornatus.dto.AddressDTO;
 import com.example.attornatus.attornatus.dto.PersonDTO;
 import com.example.attornatus.attornatus.exeptions.RequiredObjectIsNullException;
+import com.example.attornatus.attornatus.mapper.UtilModelMapper;
 import com.example.attornatus.attornatus.mocks.MockAddress;
 import com.example.attornatus.attornatus.mocks.MockPerson;
 import com.example.attornatus.attornatus.models.Address;
@@ -32,7 +33,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class PersonServiceTest {
 
-    MockPerson inputPerson; 
+    public static final long ID = 1L;
+    MockPerson inputPerson;
     MockAddress inputAddress;
 
     @InjectMocks
@@ -54,10 +56,10 @@ public class PersonServiceTest {
     void testFindById() throws Exception {
         Person person = inputPerson.mockEntity(1);
 
-        person.setId(1L);
+        person.setId(ID);
 
-        when(repository.findById(1L)).thenReturn(Optional.of(person));
-        var result = service.findById(1L);
+        when(repository.findById(ID)).thenReturn(Optional.of(person));
+        var result = service.findById(ID);
         assertEquals(result.getClass() , PersonDTO.class);
         assertNotNull(result);
         assertNotNull(result.getId());
@@ -91,10 +93,10 @@ public class PersonServiceTest {
         Person person = inputPerson.mockEntity(1);
 
         Person persisted = person;
-        persisted.setId(1L);
+        persisted.setId(ID);
 
         PersonDTO dto = inputPerson.mockDTO(1);
-        dto.setId(1L);
+        dto.setId(ID);
 
         when(repository.save(person)).thenReturn(persisted);
         var result = service.create(dto);
@@ -120,15 +122,15 @@ public class PersonServiceTest {
     @Test
     void testUpdate() throws Exception {
         Person entity = inputPerson.mockEntity(1);
-        entity.setId(1L);
+        entity.setId(ID);
 
         Person persisted = entity;
-        persisted.setId(1L);
+        persisted.setId(ID);
 
         PersonDTO dto = inputPerson.mockDTO(1);
-        dto.setId(1L);
+        dto.setId(ID);
 
-        when(repository.findById(1L)).thenReturn(Optional.of(entity));
+        when(repository.findById(ID)).thenReturn(Optional.of(entity));
         when(repository.save(entity)).thenReturn(persisted);
 
         var result = service.update(dto);
@@ -156,57 +158,66 @@ public class PersonServiceTest {
     void testDelete() throws Exception {
         Person person = inputPerson.mockEntity(1);
 
-        person.setId(1L);
+        person.setId(ID);
 
-        when(repository.findById(1L)).thenReturn(Optional.of(person));
-        service.delete(1L);
+        when(repository.findById(ID)).thenReturn(Optional.of(person));
+        service.delete(ID);
     }
 
     @Test
     void testGetAddressesEntitiesByPersonId() throws Exception {
         Person person = inputPerson.mockEntity(1);
 
-        person.setId(1L);
+        person.setId(ID);
 
         List<Address> addressList = inputAddress.mockEntityList();
 
-        when(repository.findById(1L)).thenReturn(Optional.of(person));
-        when(addressRepository.findByPersonId(1L)).thenReturn(addressList);
+        when(repository.findById(ID)).thenReturn(Optional.of(person));
+        when(addressRepository.findByPersonId(ID)).thenReturn(addressList);
 
-        var result = service.getAddressesEntitiesByPersonId(1L);
+        var result = service.findAddressesEntitiesByPersonId(ID);
 
         assertNotNull(result);
         assertEquals(9, result.size());
 
         var firstAddressOfList = result.get(0);
         assertEquals(Long.valueOf(0), firstAddressOfList.getId());
-        assertEquals("12345-230", firstAddressOfList.getCEP());
+        assertEquals("12345-230", firstAddressOfList.getCep());
         assertEquals("Salvador0", firstAddressOfList.getCity());
         assertEquals("Rua Manoel Gomes de Mendonca0", firstAddressOfList.getStreet());
         assertEquals(0, firstAddressOfList.getNumber());
 
         var lastAddressOfList = result.get(8);
         assertEquals(Long.valueOf(8), lastAddressOfList.getId());
-        assertEquals("12345-238", lastAddressOfList.getCEP());
+        assertEquals("12345-238", lastAddressOfList.getCep());
         assertEquals("Salvador8", lastAddressOfList.getCity());
         assertEquals("Rua Manoel Gomes de Mendonca8", lastAddressOfList.getStreet());
         assertEquals(8, lastAddressOfList.getNumber());
     }
 
     @Test
-    public void testFindAddressByPersonId() {
-        Long personId = 1L;
-        var addressEntities = inputAddress.mockEntityList();
-        var entityPerson = inputPerson.mockEntity();
+    public void testFindAddressesByPersonId() {
+        var addressesEntities = inputAddress.mockEntityList();
+        var personEntity = inputPerson.mockEntity(1);
 
-        when(repository.findById(any())).thenReturn(Optional.ofNullable(entityPerson));
-        when(service.getAddressesEntitiesByPersonId(any())).thenReturn(addressEntities);
+        when(repository.findById(anyLong())).thenReturn(Optional.ofNullable(personEntity));
+        when(addressRepository.findByPersonId(personEntity.getId())).thenReturn(addressesEntities);
+        lenient().when(service.findAddressesEntitiesByPersonId(personEntity.getId())).thenReturn(addressesEntities);
 
-        var expectedAddresses = inputAddress.mockDTOList();
-        var actualAddresses = service.findAddressesByPersonId(personId);
-
-        assertTrue(expectedAddresses.equals(actualAddresses));
+        var result = service.findAddressesByPersonId(anyLong());
+        assertEquals(UtilModelMapper.parseListObjects(addressesEntities, AddressDTO.class), result);
     }
 
+    @Test
+    public void testFindMainAddressByPersonId() {
+        var addresses = inputAddress.mockEntityList();
+        addresses.get(1).setMainAddress(true);
+        var personEntity = inputPerson.mockEntity(1);
 
+        when(repository.findById(ID)).thenReturn(Optional.ofNullable(personEntity));
+        when(service.findAddressesEntitiesByPersonId(personEntity.getId())).thenReturn(addresses);
+
+        var result = service.findMainAddressByPersonId(personEntity.getId());
+        assertEquals(addresses.get(1), result);
+    }
 }

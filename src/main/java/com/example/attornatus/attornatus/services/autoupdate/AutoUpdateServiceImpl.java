@@ -18,7 +18,7 @@ public class AutoUpdateServiceImpl implements AutoUpdateService {
     @Override
     public void setOldMainAddressToFalse(Long idPerson, AddressDTO dto) {
         if(dto.isMainAddress() == true) {
-            var oldMainAddress = personService.getAddressesEntitiesByPersonId(idPerson)
+            var oldMainAddress = personService.findAddressesEntitiesByPersonId(idPerson)
                     .stream()
                     .filter(Address::isMainAddress)
                     .findFirst()

@@ -1,7 +1,6 @@
 package com.example.attornatus.attornatus.services;
 
 import com.example.attornatus.attornatus.dto.AddressDTO;
-import com.example.attornatus.attornatus.exeptions.RequiredObjectIsNullException;
 import com.example.attornatus.attornatus.exeptions.ResourceNotFoundException;
 import com.example.attornatus.attornatus.models.Address;
 import com.example.attornatus.attornatus.repositorys.AddressRepository;
@@ -23,6 +22,8 @@ public class AddressServiceImpl implements AddressService {
     @Autowired
     private PersonRepository personRepository;
     @Autowired
+    private PersonService personService;
+    @Autowired
     private AddressValidator validator;
     @Autowired
     private AutoUpdateService update;
@@ -31,23 +32,19 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressDTO findById(Long id) {
-        logger.info("find one address by id: " + id);
-
         var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
+
+        logger.info("find one address by id: " + id);
         return parseObject(entity, AddressDTO.class);
     }
 
     @Override
     public AddressDTO create(Long idPerson, AddressDTO dto) throws Exception {
-        validator.cep(dto.getCEP());
-
-        if(dto == null) {
-            throw new RequiredObjectIsNullException();
-        }
         var personEntity = personRepository.findById(idPerson)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
+        validator.create(dto, personService.findAddressesEntitiesByPersonId(personEntity.getId()));
         update.setOldMainAddressToFalse(idPerson, dto);
 
         var addressEntity = parseObject(dto, Address.class);
@@ -63,13 +60,13 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressDTO update(AddressDTO dto) {
-        validator.cep(dto.getCEP());
         var entity = repository.findById(dto.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
+        validator.update(dto);
         update.setOldMainAddressToFalse(entity.getPerson().getId(), dto);
 
-        entity.setCEP(dto.getCEP());
+        entity.setCep(dto.getCep());
         entity.setCity(dto.getCity());
         entity.setNumber(dto.getNumber());
         entity.setStreet(dto.getStreet());
@@ -81,11 +78,10 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void delete(Long id) {
-        logger.info("delete one AddressDTO");
-
         var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
+        logger.info("delete one AddressDTO");
         repository.delete(entity);
     }
 }

@@ -35,7 +35,7 @@ public class MockAddress {
     public Address mockEntity(Integer number) {
         Address Address = new Address();
         Address.setId(number.longValue());
-        Address.setCEP("12345-23" + number);
+        Address.setCep("12345-23" + number);
         Address.setCity("Salvador" + number);
         Address.setStreet("Rua Manoel Gomes de Mendonca" + number);
         Address.setNumber(number);
@@ -45,7 +45,7 @@ public class MockAddress {
     public AddressDTO mockDTO(Integer number) {
         AddressDTO Address = new AddressDTO();
         Address.setId(number.longValue());
-        Address.setCEP("12345-23" + number);
+        Address.setCep("12345-23" + number);
         Address.setCity("Salvador" + number);
         Address.setStreet("Rua Manoel Gomes de Mendonca" + number);
         Address.setNumber(number);

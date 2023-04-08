@@ -2,12 +2,14 @@ package com.example.attornatus.attornatus.dto;
 
 import com.example.attornatus.attornatus.models.Address;
 
+import java.util.Objects;
+
 public class AddressDTO {
 
     private Long id;
-    private String CEP;
+    private String cep;
     private String street;
-    private Integer number;
+    private int number;
     private String city;
     private boolean mainAddress;
 
@@ -22,12 +24,12 @@ public class AddressDTO {
         this.id = id;
     }
 
-    public String getCEP() {
-        return CEP;
+    public String getCep() {
+        return cep;
     }
 
-    public void setCEP(String CEP) {
-        this.CEP = CEP;
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 
     public String getStreet() {
@@ -62,25 +64,58 @@ public class AddressDTO {
         this.mainAddress = mainAddress;
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof Address)) return false;
+//        Address address = (Address) o;
+//        if (o instanceof AddressDTO) {
+//            AddressDTO addressDTO = (AddressDTO) o;
+//            return number == addressDTO.getNumber() &&
+//                    Objects.equals(cep, addressDTO.getCep()) &&
+//                    Objects.equals(street, addressDTO.getStreet()) &&
+//                    Objects.equals(city, addressDTO.getCity());
+//        } else {
+//            return number == address.getNumber() &&
+//                    Objects.equals(cep, address.getCep()) &&
+//                    Objects.equals(street, address.getStreet()) &&
+//                    Objects.equals(city, address.getCity());
+//        }
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(cep, street, number, city);
+//    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AddressDTO that)) return false;
 
-        if (isMainAddress() != that.isMainAddress()) return false;
-        if (getCEP() != null ? !getCEP().equals(that.getCEP()) : that.getCEP() != null) return false;
+        if (getNumber() != that.getNumber()) return false;
+        if (getCep() != null ? !getCep().equals(that.getCep()) : that.getCep() != null) return false;
         if (getStreet() != null ? !getStreet().equals(that.getStreet()) : that.getStreet() != null) return false;
-        if (getNumber() != null ? !getNumber().equals(that.getNumber()) : that.getNumber() != null) return false;
         return getCity() != null ? getCity().equals(that.getCity()) : that.getCity() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getCEP() != null ? getCEP().hashCode() : 0;
+        int result = getCep() != null ? getCep().hashCode() : 0;
         result = 31 * result + (getStreet() != null ? getStreet().hashCode() : 0);
-        result = 31 * result + (getNumber() != null ? getNumber().hashCode() : 0);
+        result = 31 * result + getNumber();
         result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);
-        result = 31 * result + (isMainAddress() ? 1 : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "AddressDTO{" +
+                "cep='" + cep + '\'' +
+                ", street='" + street + '\'' +
+                ", number=" + number +
+                ", city='" + city + '\'' +
+                '}';
     }
 }

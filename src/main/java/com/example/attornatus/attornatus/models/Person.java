@@ -24,12 +24,6 @@ public class Person {
     public Person() {
     }
 
-    public Person(String name, LocalDate birthDay, Set<Address> addresses) {
-        this.name = name;
-        this.birthDay = birthDay;
-        this.addresses = addresses;
-    }
-
     public Long getId() {
         return id;
     }

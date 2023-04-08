@@ -1,5 +1,6 @@
 package com.example.attornatus.attornatus.exeptions.handler;
 
+import com.example.attornatus.attornatus.exeptions.ElementRepeatedException;
 import com.example.attornatus.attornatus.exeptions.ExceptionResponse;
 import com.example.attornatus.attornatus.exeptions.RequiredObjectIsNullException;
 import org.springframework.http.HttpStatus;
@@ -32,4 +33,11 @@ public class CustomizedResponseEntitiyExceptionHandler extends ResponseEntityExc
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ElementRepeatedException.class)
+    public final ResponseEntity<ExceptionResponse> handleElementRepeatedExceptions(Exception ex, WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Date(), ex.getMessage(), request.getDescription(false));
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
 }

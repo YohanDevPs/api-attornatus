@@ -1,8 +1,11 @@
 package com.example.attornatus.attornatus.models;
 
+import com.example.attornatus.attornatus.dto.AddressDTO;
 import jakarta.persistence.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 public class Address {
@@ -13,15 +16,14 @@ public class Address {
 
     @Column
     @NotBlank
-    private String CEP;
+    private String cep;
 
     @Column
     @NotBlank
     private String street;
 
-    @NotBlank
     @Column
-    @NotBlank
+    @NotNull
     private int number;
 
     @NotBlank
@@ -39,13 +41,6 @@ public class Address {
     public Address() {
     }
 
-    public Address(String CEP, String street, int number, String city) {
-        this.CEP = CEP;
-        this.street = street;
-        this.number = number;
-        this.city = city;
-    }
-
     public Long getId() {
         return id;
     }
@@ -54,12 +49,12 @@ public class Address {
         this.id = id;
     }
 
-    public String getCEP() {
-        return CEP;
+    public String getCep() {
+        return cep;
     }
 
-    public void setCEP(String CEP) {
-        this.CEP = CEP;
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 
     public String getStreet() {
@@ -105,24 +100,16 @@ public class Address {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Address address)) return false;
-
-        if (getNumber() != address.getNumber()) return false;
-        if (isMainAddress() != address.isMainAddress()) return false;
-        if (getCEP() != null ? !getCEP().equals(address.getCEP()) : address.getCEP() != null) return false;
-        if (getStreet() != null ? !getStreet().equals(address.getStreet()) : address.getStreet() != null) return false;
-        if (getCity() != null ? !getCity().equals(address.getCity()) : address.getCity() != null) return false;
-        return getPerson() != null ? getPerson().equals(address.getPerson()) : address.getPerson() == null;
+        if (!(o instanceof AddressDTO)) return false;
+        AddressDTO address = (AddressDTO) o;
+        return number == address.getNumber() &&
+                Objects.equals(cep, address.getCep()) &&
+                Objects.equals(street, address.getStreet()) &&
+                Objects.equals(city, address.getCity());
     }
 
     @Override
     public int hashCode() {
-        int result = getCEP() != null ? getCEP().hashCode() : 0;
-        result = 31 * result + (getStreet() != null ? getStreet().hashCode() : 0);
-        result = 31 * result + getNumber();
-        result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);
-        result = 31 * result + (isMainAddress() ? 1 : 0);
-        result = 31 * result + (getPerson() != null ? getPerson().hashCode() : 0);
-        return result;
+        return Objects.hash(cep, street, number, city);
     }
 }

@@ -1,24 +1,19 @@
 package com.example.attornatus.attornatus.services;
 
 import com.example.attornatus.attornatus.dto.AddressDTO;
-import com.example.attornatus.attornatus.dto.PersonDTO;
-import com.example.attornatus.attornatus.exeptions.ResourceNotFoundException;
 import com.example.attornatus.attornatus.mocks.MockAddress;
 import com.example.attornatus.attornatus.mocks.MockPerson;
 import com.example.attornatus.attornatus.models.Address;
-import com.example.attornatus.attornatus.models.Person;
 import com.example.attornatus.attornatus.repositorys.AddressRepository;
 import com.example.attornatus.attornatus.repositorys.PersonRepository;
 import com.example.attornatus.attornatus.services.autoupdate.AutoUpdateService;
 import com.example.attornatus.attornatus.validators.AddressValidator;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
@@ -44,10 +39,13 @@ public class AddressSeviceTest {
     @Mock
     private AutoUpdateService update;
     @Mock
+    private PersonService personService;
+    @Mock
     private AddressValidator validator;
 
     @BeforeEach
     void setUpMocks() {
+        validator = new AddressValidator();
         inputPerson = new MockPerson();
         inputAddress = new MockAddress();
         MockitoAnnotations.openMocks(this);
@@ -65,7 +63,7 @@ public class AddressSeviceTest {
         assertNotNull(result);
 
         assertEquals(ID, result.getId());
-        assertEquals("12345-231", result.getCEP());
+        assertEquals("12345-231", result.getCep());
         assertEquals("Salvador1", result.getCity());
         assertEquals("Rua Manoel Gomes de Mendonca1", result.getStreet());
         assertEquals(1, result.getNumber());
@@ -77,18 +75,21 @@ public class AddressSeviceTest {
         personEntity.setId(ID);
 
         var addressDTO = inputAddress.mockDTO(1);
+        var addressesToVerifyRepetition = inputAddress.mockEntityList();
 
         when(personRepository.findById(ID)).thenReturn(Optional.of(personEntity));
+        doNothing().when(validator).create(any(AddressDTO.class), any());
+        when(personService.findAddressesEntitiesByPersonId(ID)).thenReturn(addressesToVerifyRepetition);
         doNothing().when(update).setOldMainAddressToFalse(ID, addressDTO);
+
         var result = service.create(ID, addressDTO);
 
         ArgumentCaptor<Address> addressCaptor = ArgumentCaptor.forClass(Address.class);
         verify(repository, times(1)).save(addressCaptor.capture());
-        verify(validator, times(1)).cep(addressDTO.getCEP());
 
         assertNotNull(result);
         assertEquals(ID,  result.getId());
-        assertEquals("12345-231", result.getCEP());
+        assertEquals("12345-231", result.getCep());
         assertEquals("Salvador1", result.getCity());
         assertEquals("Rua Manoel Gomes de Mendonca1", result.getStreet());
         assertEquals(1, result.getNumber());
@@ -109,11 +110,10 @@ public class AddressSeviceTest {
         when(repository.save(addressEntity)).thenReturn(addressEntity);
 
         var result = service.update(addressDTO);
-        verify(validator, times(1)).cep(addressDTO.getCEP());
 
         assertNotNull(result);
 
-        assertEquals(addressEntity.getCEP(), result.getCEP());
+        assertEquals(addressEntity.getCep(), result.getCep());
         assertEquals(addressEntity.getCity(), result.getCity());
         assertEquals(addressEntity.getNumber(), result.getNumber());
         assertEquals(addressEntity.getStreet(), result.getStreet());
