@@ -1,7 +1,7 @@
 package com.example.attornatus.attornatus.exeptions.handler;
 
 import com.example.attornatus.attornatus.exeptions.ElementRepeatedException;
-import com.example.attornatus.attornatus.exeptions.ExceptionResponse;
+import com.example.attornatus.attornatus.exeptions.resource.ExceptionResponse;
 import com.example.attornatus.attornatus.exeptions.RequiredObjectIsNullException;
 import com.example.attornatus.attornatus.exeptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;

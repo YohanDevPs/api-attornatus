@@ -1,4 +1,4 @@
-package com.example.attornatus.attornatus.exeptions;
+package com.example.attornatus.attornatus.exeptions.resource;
 
 import java.io.Serializable;
 import java.util.Date;
