@@ -32,33 +32,31 @@ public class PersonServiceImpl implements PersonService{
 
     @Override
     public List<PersonDTO> findAll() {
-        logger.info("finding all people!");
         var dtoList = UtilModelMapper.parseListObjects(repository.findAll(), PersonDTO.class);
+        logger.info("finding all people!");
         return dtoList;
     }
 
     @Override
     public PersonDTO findById(Long id) {
-        logger.info("find one PersonDTO");
-
         var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
+
+        logger.info("find one PersonDTO");
         return parseObject(entity, PersonDTO.class);
     }
 
     @Override
     public PersonDTO create(PersonDTO dto) {
         validator.create(dto);
-        logger.info("Creating one PersonDTO");
         var entity = parseObject(dto, Person.class);
+        logger.info("Creating one PersonDTO");
         return parseObject(repository.save(entity), PersonDTO.class);
-
     }
 
     @Override
     public PersonDTO update(PersonDTO dto) {
         validator.update(dto);
-        logger.info("Update one PersonDTO");
 
         var entity = repository.findById(dto.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
@@ -66,26 +64,26 @@ public class PersonServiceImpl implements PersonService{
         entity.setName(dto.getName());
         entity.setBirthDay(dto.getBirthDay());
 
+        logger.info("Update one PersonDTO");
         return parseObject(repository.save(entity), PersonDTO.class);
     }
 
 
     @Override
     public void delete(Long id) {
-        logger.info("Delete one Person");
-
         var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
+
+        logger.info("Delete one Person");
         repository.delete(entity);
     }
 
     @Override
     public List<Address> findAddressesEntitiesByPersonId(Long id) {
-        logger.info("get all addresses of Person");
-
         var entityPerson = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
+        logger.info("get all addresses of Person");
         return addressRepository.findByPersonId(entityPerson.getId());
     }
 
@@ -104,6 +102,7 @@ public class PersonServiceImpl implements PersonService{
                 .findFirst()
                 .orElse(null);
 
+        logger.info("find main Address by person id: " + id);
         return parseObject(entityMainAddress, AddressDTO.class);
     }
 }
