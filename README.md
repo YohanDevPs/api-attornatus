@@ -12,7 +12,7 @@ foi adicionado como extras.
 - Deleção de endereço
 
 
-## :hammer: Rotas do projeto
+## Rotas do projeto
 
 ### Pessoas
 | HTTP METHOD | PATH | Descriçao |
