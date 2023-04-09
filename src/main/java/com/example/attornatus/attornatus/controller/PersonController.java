@@ -25,119 +25,66 @@ public class PersonController {
     private PersonService service;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    @Operation(summary = "Finds all People", description = "Finds all people",
-            tags = {"Person"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200",
+    @Operation(summary = "Finds all People", description = "Finds all people", tags = {"Person"},
+            responses = @ApiResponse(description = "Success", responseCode = "200",
                             content = {@Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = PersonDTO.class))
-                            )}),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
-    })
+                                    array = @ArraySchema(schema = @Schema(implementation = PersonDTO.class)))}))
     @ResponseStatus(HttpStatus.OK)
     public List<PersonDTO> findAll() throws Exception {
         return service.findAll();
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @Operation(summary = "Finds a Person", description = "Finds a person passing a id",
-            tags = {"Person"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = PersonDTO.class))),
-                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
-            })
+    @Operation(summary = "Finds a Person", description = "Finds a person passing a id", tags = {"Person"},
+            responses = @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = PersonDTO.class))))
     @ResponseStatus(HttpStatus.OK)
     public PersonDTO findById(@PathVariable(value = "id") Long id) throws Exception {
         return service.findById(id);
     }
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},  produces = {MediaType.APPLICATION_JSON_VALUE})
-    @Operation(summary = "Create a Person", description = "Create a Person by passing a JSON",
-            tags = {"Person"},
-            responses = {
-                    @ApiResponse(description = "Created", responseCode = "201",
-                            content = @Content(schema = @Schema(implementation = PersonDTO.class))),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
-            })
+    @Operation(summary = "Create a Person", description = "Create a Person by passing a JSON", tags = {"Person"},
+            responses = @ApiResponse(description = "Created", responseCode = "201",
+                            content = @Content(schema = @Schema(implementation = PersonDTO.class))))
     @ResponseStatus(HttpStatus.CREATED)
     public PersonDTO create(@RequestBody PersonDTO dto) throws Exception {
         return service.create(dto);
     }
 
     @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},  produces = {MediaType.APPLICATION_JSON_VALUE})
-    @Operation(summary = "Update a Person", description = "Update a Person by passing a JSON",
-            tags = {"Person"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = PersonDTO.class))),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
-            })
+    @Operation(summary = "Update a Person", description = "Update a Person by passing a JSON",tags = {"Person"},
+            responses = @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = PersonDTO.class))))
     @ResponseStatus(HttpStatus.OK)
     public PersonDTO update(@RequestBody PersonDTO dto) throws Exception {
         return service.update(dto);
     }
 
     @DeleteMapping(value = "/{id}")
-    @Operation(summary = "Delete a Person", description = "Delete a Person by passing id",
-            tags = {"Person"},
-            responses = {
-                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
-            })
+    @Operation(summary = "Delete a Person", description = "Delete a Person by passing id", tags = {"Person"},
+            responses = @ApiResponse(description = "No Content", responseCode = "204", content = @Content))
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "id") Long id) throws Exception {
         service.delete(id);
     }
 
     @GetMapping(value = "addresses/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @Operation(summary = "Finds all addresses by person id", description = "Finds all addresses of a person passing a id",
-            tags = {"Person"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200",
+    @Operation(summary = "Finds all addresses by person id", description = "Finds all addresses of a person passing a id", tags = {"Person"},
+            responses = @ApiResponse(description = "Success", responseCode = "200",
                             content = {@Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = AddressDTO.class))
-                            )}),
-                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
-            })
+                                    array = @ArraySchema(schema = @Schema(implementation = AddressDTO.class)))}))
     @ResponseStatus(HttpStatus.OK)
     public List<AddressDTO> findAddressesByPersonId(@PathVariable(value = "id") Long id) throws Exception {
         return service.findAddressesByPersonId(id);
     }
 
     @GetMapping(value = "mainAdress/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @Operation(summary = "Finds main adress of person", description = "Find main address passing person id",
-            tags = {"Person"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = AddressDTO.class))),
-                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
-            })
+    @Operation(summary = "Finds main adress of person", description = "Find main address passing person id", tags = {"Person"},
+            responses = @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = AddressDTO.class))))
     @ResponseStatus(HttpStatus.OK)
     public AddressDTO findMainAddress(@PathVariable(value = "id") Long id) throws Exception {
         return service.findMainAddressByPersonId(id);

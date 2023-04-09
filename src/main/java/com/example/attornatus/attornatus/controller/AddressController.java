@@ -24,15 +24,8 @@ public class AddressController {
     @Operation(summary = "Finds a Address",
             description = "Finds a Address passing the id of the person",
             tags = {"Address"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = AddressDTO.class))),
-                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
-            })
+            responses = @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = AddressDTO.class))))
     @ResponseStatus(HttpStatus.OK)
     public AddressDTO findById(@PathVariable(value = "id") Long id) throws Exception {
         return service.findById(id);
@@ -42,13 +35,8 @@ public class AddressController {
     @Operation(summary = "Create a Address",
             description = "Create a Address by passing an address in json format and the id of the person",
             tags = {"Address"},
-            responses = {
-                    @ApiResponse(description = "Created", responseCode = "201",
-                            content = @Content(schema = @Schema(implementation = AddressDTO.class)                            )),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
-            })
+            responses = @ApiResponse(description = "Created", responseCode = "201",
+                            content = @Content(schema = @Schema(implementation = AddressDTO.class))))
     @ResponseStatus(HttpStatus.CREATED)
     public AddressDTO create(@PathVariable(value = "idPerson") Long idPerson, @RequestBody AddressDTO dto) throws Exception {
         return service.create(idPerson, dto);
@@ -57,14 +45,8 @@ public class AddressController {
     @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},  produces = {MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "Update a Address", description = "Update a Address by passing a JSON",
             tags = {"Address"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = AddressDTO.class))),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
-            })
+            responses = @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = AddressDTO.class))))
     @ResponseStatus(HttpStatus.OK)
     public AddressDTO update(@RequestBody AddressDTO dto) throws Exception {
         return service.update(dto);
@@ -73,13 +55,7 @@ public class AddressController {
     @DeleteMapping(value = "/{id}")
     @Operation(summary = "Delete a Person", description = "Delete a Address by passing id",
             tags = {"Address"},
-            responses = {
-                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal error", responseCode = "500", content = @Content)
-            })
+            responses = @ApiResponse(description = "No Content", responseCode = "204", content = @Content))
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "id") Long id) throws Exception {
         service.delete(id);

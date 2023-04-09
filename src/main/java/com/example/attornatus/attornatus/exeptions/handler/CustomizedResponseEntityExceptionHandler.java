@@ -3,6 +3,7 @@ package com.example.attornatus.attornatus.exeptions.handler;
 import com.example.attornatus.attornatus.exeptions.ElementRepeatedException;
 import com.example.attornatus.attornatus.exeptions.ExceptionResponse;
 import com.example.attornatus.attornatus.exeptions.RequiredObjectIsNullException;
+import com.example.attornatus.attornatus.exeptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -40,4 +41,15 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleElementNotFoundExceptions(Exception ex, WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
 }
+
