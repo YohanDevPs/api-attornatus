@@ -1,21 +1,24 @@
 # Teste Técnico Back End - Attornatus
 
 ## Descrição
-API criada com Spting Boot para gerenciamento de pessoase seus endereços, essa API deve permitir:
+API criada com Spring Boot para gerenciamento de pessoas e seus endereços, essa API deve permitir:
 - Criar, editar, consultar e listar pessoas.
-- Criar endereços para as pessoas, listar endereços de cada individuo e informar qual é o principal.
+- Criar endereços, listar e informar qual é o principal de cada individuo.
 
-foi adicionado como extras.
-- Deleção de pessoa
-- Sistema de update de endereço, apenas um é o principal, então caso um novo endereço principal é adicionado o antigo deixa de ser. 
-- Edição de endereço
-- Deleção de endereço
+Foi adicionado como extras.
+- Deleção de pessoa.
+- Sistema de atualização de endereços para garantir que apenas um seja o principal.
+- Edição de endereço.
+- Deleção de endereço.
 
+Requisitos:
+- Todas as requisições apenas trabalham com JSON.
+- Foi utilizado o banco de dados H2.
 
 ## Rotas do projeto
 
 ### Pessoas
-| HTTP METHOD | PATH | Descriçao |
+| HTTP METHOD | URL | Descriçao |
 | ------ | ------ | ----------- |
 |**<font color="blue">GET</font>**|`http://localhost:8080/api/person/v1/{idPessoa}`   | Consultar pessoa |
 |**<font color="blue">POST</font>**|`http://localhost:8080/api/person/v1/` | Criar pessoa |
@@ -26,7 +29,7 @@ foi adicionado como extras.
 |**<font color="blue">GET</font>**| `http://localhost:8080/api/person/v1/mainAdress/{idPessoa}`   | Consultar endereço principal da pessoa  |
 
 ### Endereços
-| HTTP METHOD | PATH | Descriçao |
+| HTTP METHOD | URL | Descriçao |
 | ------ | ------ | ----------- |
 |**<font color="blue">POST</font>**|`http://localhost:8080/api/address/v1/create/{idPessoa}`   | Adicionar endereço a uma pessoa  |
 |**<font color="blue">PUT</font>**|`http://localhost:8080/api/address/v1` | Editar endereço |
@@ -35,12 +38,12 @@ foi adicionado como extras.
 ## Documentação com Swagger
 Para ler a documentação swagger.
 1. Execute a aplicação 
-2. Acesse localmente: `http://localhost:8080/swagger-ui/index.html`
+2. Acesse localmente: http://localhost:8080/swagger-ui/index.html
 
 ## Banco de dados H2
 Para acessar o banco de dados:
-1. Execute a aplicação
-2. Acesse localmente: `http://localhost:8080/h2-console`
+1. Execute a aplicação.
+2. Acesse localmente: http://localhost:8080/h2-console
 
 
 | Configuração | Valor                   |
