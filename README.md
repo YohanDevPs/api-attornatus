@@ -5,6 +5,10 @@ API criada com Spring Boot para gerenciamento de pessoas e seus endereços, essa
 - Criar, editar, consultar e listar pessoas.
 - Criar endereços, listar e informar qual é o principal de cada individuo.
 
+Diferenciais:
+- Clean Code.
+- Alta cobertura de testes. 
+
 Foi adicionado como extras.
 - Deleção de pessoa.
 - Sistema de atualização de endereços para garantir que apenas um seja o principal.
