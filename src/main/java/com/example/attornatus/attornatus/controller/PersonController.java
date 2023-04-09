@@ -27,9 +27,9 @@ public class PersonController {
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "Finds all People", description = "Finds all people", tags = {"Person"},
             responses = @ApiResponse(description = "Success", responseCode = "200",
-                            content = {@Content(
+                            content = @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = PersonDTO.class)))}))
+                                    array = @ArraySchema(schema = @Schema(implementation = PersonDTO.class)))))
     @ResponseStatus(HttpStatus.OK)
     public List<PersonDTO> findAll() throws Exception {
         return service.findAll();
@@ -54,7 +54,7 @@ public class PersonController {
     }
 
     @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},  produces = {MediaType.APPLICATION_JSON_VALUE})
-    @Operation(summary = "Update a Person", description = "Update a Person by passing a JSON",tags = {"Person"},
+    @Operation(summary = "Update a Person", description = "Update a Person by passing a JSON", tags = {"Person"},
             responses = @ApiResponse(description = "Success", responseCode = "200",
                             content = @Content(schema = @Schema(implementation = PersonDTO.class))))
     @ResponseStatus(HttpStatus.OK)
@@ -73,9 +73,9 @@ public class PersonController {
     @GetMapping(value = "addresses/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "Finds all addresses by person id", description = "Finds all addresses of a person passing a id", tags = {"Person"},
             responses = @ApiResponse(description = "Success", responseCode = "200",
-                            content = {@Content(
+                            content = @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = AddressDTO.class)))}))
+                                    array = @ArraySchema(schema = @Schema(implementation = AddressDTO.class)))))
     @ResponseStatus(HttpStatus.OK)
     public List<AddressDTO> findAddressesByPersonId(@PathVariable(value = "id") Long id) throws Exception {
         return service.findAddressesByPersonId(id);
