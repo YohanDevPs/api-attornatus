@@ -81,8 +81,8 @@ public class PersonController {
         return service.findAddressesByPersonId(id);
     }
 
-    @GetMapping(value = "mainAdress/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @Operation(summary = "Finds main adress of person", description = "Find main address passing person id", tags = {"Person"},
+    @GetMapping(value = "mainAddress/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @Operation(summary = "Finds main address of person", description = "Find main address passing person id", tags = {"Person"},
             responses = @ApiResponse(description = "Success", responseCode = "200",
                             content = @Content(schema = @Schema(implementation = AddressDTO.class))))
     @ResponseStatus(HttpStatus.OK)
