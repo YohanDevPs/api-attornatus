@@ -41,11 +41,14 @@ Para ler a documentação swagger.
 Para acessar o banco de dados:
 1. Execute a aplicação
 2. Acesse localmente: `http://localhost:8080/h2-console`
-3. Insira em:
-- Driver Class:	`org.h2.Driver`
-- JDBC URL:	`jdbc:h2:mem:testdb`
-- User Name: `sa`
-- Senha em branco
+
+
+| Configuração | Valor                   |
+| ------------ | -----------------------|
+| Driver Class | `org.h2.Driver`        |
+| JDBC URL     | `jdbc:h2:mem:testdb`   |
+| User Name    | `sa`                    |
+| Senha        | (deixe em branco)      |
 
 ## Tecnologias
 - JDK 17
