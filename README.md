@@ -25,12 +25,12 @@ Requisitos:
 | HTTP METHOD | URL | Descriçao |
 | ------ | ------ | ----------- |
 |**<font color="blue">GET</font>**|`http://localhost:8080/api/person/v1/{idPessoa}`   | Consultar pessoa |
-|**<font color="blue">POST</font>**|`http://localhost:8080/api/person/v1/` | Criar pessoa |
+|**<font color="blue">POST</font>**|`http://localhost:8080/api/person/v1` | Criar pessoa |
 |**<font color="blue">GET</font>**| `http://localhost:8080/api/person/v1`   | Consultar todos endereços da pessoa |
 |**<font color="blue">DELETE</font>**| `http://localhost:8080/api/person/v1/{idPessoa}`   | Deletar pessoa |
-|**<font color="blue">PUT</font>**|`http://localhost:8080/api/person/v1/` | Editar pessoa |
+|**<font color="blue">PUT</font>**|`http://localhost:8080/api/person/v1` | Editar pessoa |
 |**<font color="blue">GET</font>**| `http://localhost:8080/api/person/v1/addresses/{idPessoa}`   | Consultar endereços das pessoas |
-|**<font color="blue">GET</font>**| `http://localhost:8080/api/person/v1/mainAdress/{idPessoa}`   | Consultar endereço principal da pessoa  |
+|**<font color="blue">GET</font>**| `http://localhost:8080/api/person/v1/mainAddress/{idPessoa}`   | Consultar endereço principal da pessoa  |
 
 ### Endereços
 | HTTP METHOD | URL | Descriçao |
