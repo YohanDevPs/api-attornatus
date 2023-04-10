@@ -35,7 +35,7 @@ public class AddressServiceImpl implements AddressService {
         var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
-        logger.info("find one address by id: " + id);
+        logger.info("Find one address by id: " + id);
         return parseObject(entity, AddressDTO.class);
     }
 
@@ -81,7 +81,7 @@ public class AddressServiceImpl implements AddressService {
         var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
-        logger.info("delete one AddressDTO");
+        logger.info("Delete one AddressDTO");
         repository.delete(entity);
     }
 }

@@ -20,20 +20,24 @@ import static com.example.attornatus.attornatus.mapper.UtilModelMapper.parseObje
 @Service
 public class PersonServiceImpl implements PersonService{
 
-    @Autowired
+
     private PersonRepository repository;
-    @Autowired
     private AddressRepository addressRepository;
+    private PersonValidator validator;
 
     @Autowired
-    private PersonValidator validator;
+    public PersonServiceImpl(PersonRepository repository, AddressRepository addressRepository, PersonValidator validator) {
+        this.repository = repository;
+        this.addressRepository = addressRepository;
+        this.validator = validator;
+    }
 
     private Logger logger = Logger.getLogger(PersonService.class.getName());
 
     @Override
     public List<PersonDTO> findAll() {
         var dtoList = UtilModelMapper.parseListObjects(repository.findAll(), PersonDTO.class);
-        logger.info("finding all people!");
+        logger.info("Finding all people!");
         return dtoList;
     }
 
@@ -42,7 +46,7 @@ public class PersonServiceImpl implements PersonService{
         var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
-        logger.info("find one PersonDTO");
+        logger.info("Find one PersonDTO");
         return parseObject(entity, PersonDTO.class);
     }
 
