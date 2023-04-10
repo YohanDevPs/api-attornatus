@@ -20,17 +20,12 @@ import static com.example.attornatus.attornatus.mapper.UtilModelMapper.parseObje
 @Service
 public class PersonServiceImpl implements PersonService{
 
-
-    private PersonRepository repository;
-    private AddressRepository addressRepository;
-    private PersonValidator validator;
-
     @Autowired
-    public PersonServiceImpl(PersonRepository repository, AddressRepository addressRepository, PersonValidator validator) {
-        this.repository = repository;
-        this.addressRepository = addressRepository;
-        this.validator = validator;
-    }
+    private PersonRepository repository;
+    @Autowired
+    private AddressRepository addressRepository;
+    @Autowired
+    private PersonValidator validator;
 
     private Logger logger = Logger.getLogger(PersonService.class.getName());
 
@@ -87,13 +82,13 @@ public class PersonServiceImpl implements PersonService{
         var entityPerson = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this id"));
 
-        logger.info("get all addresses of Person");
+        logger.info("Get all addresses of Person");
         return addressRepository.findByPersonId(entityPerson.getId());
     }
 
     @Override
     public List<AddressDTO> findAddressesByPersonId(Long id) {
-        logger.info("find all Addresses by person id: " + id);
+        logger.info("Find all Addresses by person id: " + id);
 
         return UtilModelMapper.parseListObjects(findAddressesEntitiesByPersonId(id), AddressDTO.class);
     }
@@ -106,7 +101,7 @@ public class PersonServiceImpl implements PersonService{
                 .findFirst()
                 .orElse(null);
 
-        logger.info("find main Address by person id: " + id);
+        logger.info("Find main Address by person id: " + id);
         return parseObject(entityMainAddress, AddressDTO.class);
     }
 }

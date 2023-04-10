@@ -171,7 +171,7 @@ public class PersonControllerTest {
 
         var jsonAddressMainDTO = objectMapper.writeValueAsString(mainAddressDTO);
 
-        this.mockMvc.perform(get(URL+"/mainAdress/1")
+        this.mockMvc.perform(get(URL+"/mainAddress/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonAddressMainDTO)
                         .accept(MediaType.APPLICATION_JSON))
